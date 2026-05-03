@@ -4,7 +4,7 @@
 // ───────────────────────────────────────────────────────────────────────────
 
 const BASE = import.meta.env.VITE_API_URL
-  ? `${import.meta.env.VITE_API_URL}`
+  ? `${import.meta.env.VITE_API_URL}/api`
   : `/api`;
 // means if backend link exist then use this render link else use the local system link
 async function request(url, options = {}) {
