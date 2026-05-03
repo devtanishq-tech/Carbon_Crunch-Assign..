@@ -3,11 +3,13 @@
 // Backend runs on :8080; Vite dev-proxy forwards /api/* automatically.
 // ───────────────────────────────────────────────────────────────────────────
 
-const BASE = import.meta.env.VITE_API_URL? `${import.env.meta.VITE_API_URL}`:`/api`;
+const BASE = import.meta.env.VITE_API_URL
+  ? `${import.meta.env.VITE_API_URL}`
+  : `/api`;
 // means if backend link exist then use this render link else use the local system link
 async function request(url, options = {}) {
   const res = await fetch(url, {
-    headers: { 'Content-Type': 'application/json' },
+    headers: { "Content-Type": "application/json" },
     ...options,
   });
 
@@ -33,8 +35,8 @@ async function request(url, options = {}) {
 // Accepts both flat format and nested payload format.
 // ?fail=true simulates a backend processing failure.
 export async function submitEvent(body, simulateFailure = false) {
-  const url = `${BASE}/events${simulateFailure ? '?fail=true' : ''}`;
-  return request(url, { method: 'POST', body: JSON.stringify(body) });
+  const url = `${BASE}/events${simulateFailure ? "?fail=true" : ""}`;
+  return request(url, { method: "POST", body: JSON.stringify(body) });
 }
 
 // ── GET /api/events/raw ─────────────────────────────────────────────────────
@@ -58,11 +60,11 @@ export async function getFailedEvents() {
 // ── GET /api/aggregate ──────────────────────────────────────────────────────
 // Optional filters: clientId, from (ISO), to (ISO)
 // Returns: { totalAmount: number, count: number }
-export async function getAggregate({ clientId = '', from = '', to = '' } = {}) {
+export async function getAggregate({ clientId = "", from = "", to = "" } = {}) {
   const params = new URLSearchParams();
-  if (clientId.trim()) params.set('clientId', clientId.trim());
-  if (from) params.set('from', from);
-  if (to) params.set('to', to);
+  if (clientId.trim()) params.set("clientId", clientId.trim());
+  if (from) params.set("from", from);
+  if (to) params.set("to", to);
   const qs = params.toString();
-  return request(`${BASE}/aggregate${qs ? `?${qs}` : ''}`);
+  return request(`${BASE}/aggregate${qs ? `?${qs}` : ""}`);
 }
