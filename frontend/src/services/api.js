@@ -3,8 +3,8 @@
 // Backend runs on :8080; Vite dev-proxy forwards /api/* automatically.
 // ───────────────────────────────────────────────────────────────────────────
 
-const BASE = '/api';
-
+const BASE = import.meta.env.VITE_API_URL? `${import.env.meta.VITE_API_URL}`:`/api`;
+// means if backend link exist then use this render link else use the local system link
 async function request(url, options = {}) {
   const res = await fetch(url, {
     headers: { 'Content-Type': 'application/json' },
